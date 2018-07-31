@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ebusiness-api/ebusiness-api.iml" filepath="$PROJECT_DIR$/ebusiness-api/ebusiness-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ebusiness-common-utils/ebusiness-common-utils.iml" filepath="$PROJECT_DIR$/ebusiness-common-utils/ebusiness-common-utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ebusiness-parent/ebusiness-parent.iml" filepath="$PROJECT_DIR$/ebusiness-parent/ebusiness-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ebusiness-service-utils/ebusiness-service-utils.iml" filepath="$PROJECT_DIR$/ebusiness-service-utils/ebusiness-service-utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ebusiness-user/ebusiness-user.iml" filepath="$PROJECT_DIR$/ebusiness-user/ebusiness-user.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ebusiness-user-web/ebusiness-user-web.iml" filepath="$PROJECT_DIR$/ebusiness-user-web/ebusiness-user-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ebusiness-web-utils/ebusiness-web-utils.iml" filepath="$PROJECT_DIR$/ebusiness-web-utils/ebusiness-web-utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ebusiness0328.iml" filepath="$PROJECT_DIR$/.idea/ebusiness0328.iml" />
+    </modules>
+  </component>
+</project>
