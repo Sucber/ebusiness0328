@@ -1,5 +1,6 @@
-package com.atguigu.ebusiness.user.controller;
+package com.atguigu.ebusiness.user.web.controller;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.atguigu.ebusiness.bean.UserAddress;
 import com.atguigu.ebusiness.service.UserService;
 import com.atguigu.ebusiness.bean.UserInfo;
@@ -14,7 +15,7 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    @Autowired
+    @Reference
     UserService userService;
 
     @ResponseBody

@@ -2,8 +2,9 @@ package com.atguigu.ebusiness.bean;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import java.io.Serializable;
 
-public class UserAddress {
+public class UserAddress implements Serializable {
 
     @Id
     private String id;
