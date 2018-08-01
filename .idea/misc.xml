@@ -11,6 +11,7 @@
         <option value="$PROJECT_DIR$/ebusiness-user-web/pom.xml" />
         <option value="$PROJECT_DIR$/ebusiness-manager-web/pom.xml" />
         <option value="$PROJECT_DIR$/ebusiness-web-utils/pom.xml" />
+        <option value="$PROJECT_DIR$/dbusiness-manager-service/pom.xml" />
       </list>
     </option>
   </component>

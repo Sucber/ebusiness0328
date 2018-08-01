@@ -20,10 +20,21 @@
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
     <div>
-        一级分类：<input id="cc1" class="easyui-combobox" data-options="" />
-        二级分类：<input id="cc1" class="easyui-combobox" data-options="" />
-        三级分类：<input id="cc1" class="easyui-combobox" data-options="" />
+        一级分类：<input id="ctg1ForAttrList" class="easyui-combobox" data-options="valueField:'id',textField:'name',url:'getBaseCatalog1List',
+                onSelect: function(rec){
+                    var url = 'getBaseCatalog2ListByCataLog1Id?id='+rec.id;
+                    $('#ctg2ForAttrList').combobox('reload',url);
+                    }" />
+        二级分类：<input id="ctg2ForAttrList" class="easyui-combobox" data-options="valueField:'id',textField:'name',
+                onSelect: function(rec){
+                    var url = 'getBaseCatalog3ListByCataLog2Id?id='+rec.id;
+                    $('#ctg3ForAttrList').combobox('reload',url);
+                    }" />
+        三级分类：<input id="ctg3ForAttrList" class="easyui-combobox" data-options="valueField:'id',textField:'name'" />
     </div>
 </div>
+<script language="JavaScript">
+
+</script>
 </body>
 </html>

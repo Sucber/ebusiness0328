@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="dbusiness-manager-service" />
         <module name="ebusiness-api" />
         <module name="ebusiness-common-utils" />
         <module name="ebusiness-manager-web" />
@@ -16,6 +17,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="dbusiness-manager-service" target="1.8" />
       <module name="ebusiness-api" target="1.5" />
       <module name="ebusiness-common-utils" target="1.8" />
       <module name="ebusiness-manager-web" target="1.8" />
