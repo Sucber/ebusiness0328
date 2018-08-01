@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="ebusiness-api" />
         <module name="ebusiness-common-utils" />
+        <module name="ebusiness-manager-web" />
         <module name="ebusiness-service-utils" />
         <module name="ebusiness-user" />
         <module name="ebusiness-user-web" />
@@ -17,6 +18,7 @@
     <bytecodeTargetLevel>
       <module name="ebusiness-api" target="1.5" />
       <module name="ebusiness-common-utils" target="1.8" />
+      <module name="ebusiness-manager-web" target="1.8" />
       <module name="ebusiness-parent" target="1.8" />
       <module name="ebusiness-service-utils" target="1.8" />
       <module name="ebusiness-user" target="1.8" />
