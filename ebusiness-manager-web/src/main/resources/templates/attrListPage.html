@@ -53,39 +53,42 @@
         var ctg3Id = $("#ctg3ForAttrList").combobox("getValue");
         if(ctg3Id){
             $("#dlg").dialog("open");
+            //清空attrName
+            $("#attrName").textbox("setText","");
             initAttrValueDatagrid();
+            //防止用户选择了属性后点击新建从而导致跳转至update选项
+            $("#dg").datagrid("unselectAll");
         }else{
             alert("请选择三级分类");
         }
     }
     function editAttr(){
         var ctg3Id = $("#ctg3ForAttrList").combobox("getValue");
-        if(ctg3Id){
+        var attrInfo = $("#dg").datagrid("getSelected");
+        if(ctg3Id&&attrInfo){
             $("#dlg").dialog("open");
-
-            var attrInfo = $("#dg").datagrid("getSelected");
             initAttrValueDatagrid(attrInfo);
+            $("#dg").datagrid("unselectAll");
         }else{
-            alert("请选择三级分类");
+            alert("请选择三级分类和属性");
         }
     }
     function removeAttr(){
         var ctg3Id = $("#ctg3ForAttrList").combobox("getValue");
         var attrInfo = $("#dg").datagrid("getSelected");
         var id = attrInfo.id;
-        var dataJson = {
-            id:id
+        var idJson = {
+            attrId:id
         };
         if(id){
-            $.post("removeAttrInfo",dataJson,function(data){
+            $.post("removeAttrInfo",idJson,function(data){
                 if(data="success"){
                     alert("success");
-                    $("#dg").reload("reload","getBaseAttrInfo?id="+ctg3Id);
+                    reloadAttrList();
                 }else{
                     alert(data);
                 }
             });
-
 
         }else{
             alert("请选择属性");

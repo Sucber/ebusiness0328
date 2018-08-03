@@ -21,12 +21,23 @@ public class AttrServiceImpl implements AttrService {
     @Autowired
     private AttrValueMapper attrValueMapper;
 
+    private Example attrInfoExample;
+
+    private Example attrValueExample;
+
+    {
+        attrInfoExample = new Example(BaseAttrInfo.class);
+        attrValueExample = new Example(BaseAttrValue.class);
+
+    }
+
+
     @Override
     public List<BaseAttrInfo> getBaseAttrInfo(String catalog3Id) {
-        Example example = new Example(BaseAttrInfo.class);
-        example.createCriteria().andEqualTo("catalog3Id",catalog3Id);
 
-        return attrInfoMapper.selectByExample(example);
+        attrInfoExample.createCriteria().andEqualTo("catalog3Id",catalog3Id);
+
+        return attrInfoMapper.selectByExample(attrInfoExample);
     }
 
     @Override
@@ -34,13 +45,16 @@ public class AttrServiceImpl implements AttrService {
         //插入一条AttfInfo数据
         attrInfoMapper.insertSelective(baseAttrInfo);
         //获取从数据库获得的attrInfo（需要attrid）
-        Example example = new Example(BaseAttrInfo.class);
-        Example.Criteria criteria = example.createCriteria();
+        Example.Criteria criteria = attrInfoExample.createCriteria();
         criteria.andEqualTo("catalog3Id",baseAttrInfo.getCatalog3Id());
         criteria.andEqualTo("attrName",baseAttrInfo.getAttrName());
-        BaseAttrInfo backAttrInfo = attrInfoMapper.selectOneByExample(example);
+        BaseAttrInfo backAttrInfo = attrInfoMapper.selectOneByExample(attrInfoExample);
         //插入属性值
+
         List<BaseAttrValue> attrValueList = baseAttrInfo.getAttrValueList();
+        if(attrValueList == null){
+            return;
+        }
         for (BaseAttrValue baseAttrValue : attrValueList) {
             baseAttrValue.setAttrId(backAttrInfo.getId());
             attrValueMapper.insert(baseAttrValue);
@@ -49,17 +63,40 @@ public class AttrServiceImpl implements AttrService {
 
     @Override
     public void updateAttrInfo(BaseAttrInfo baseAttrInfo) {
-        attrInfoMapper.updateByPrimaryKey(baseAttrInfo);
-        //获取从数据库获得的attrInfo（需要attrid）
-        Example example = new Example(BaseAttrInfo.class);
-        Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("catalog3Id",baseAttrInfo.getCatalog3Id());
-        criteria.andEqualTo("attrName",baseAttrInfo.getAttrName());
-        BaseAttrInfo backAttrInfo = attrInfoMapper.selectOneByExample(example);
+        //清理example
+        attrValueExample.clear();
+        attrInfoExample.clear();
+
+        //安全机制&更改属性名
+        if(baseAttrInfo==null){
+            throw new NullPointerException("baseAttrInfo为空");
+        }
+        BaseAttrInfo dbAttrInfo = attrInfoMapper.selectByPrimaryKey(baseAttrInfo.getId());
+        if(!dbAttrInfo.getAttrName().equals(baseAttrInfo.getAttrName())){
+            attrInfoMapper.updateByPrimaryKey(baseAttrInfo);
+        }
+
+        //获得数据库中所有attrid下的valueName
+        attrValueExample.createCriteria().andEqualTo("attrId",baseAttrInfo.getId());
+        List<BaseAttrValue> dbValueList = attrValueMapper.selectByExample(attrValueExample);
         //插入属性值
         List<BaseAttrValue> attrValueList = baseAttrInfo.getAttrValueList();
+        if(attrValueList == null){
+            return;
+        }
+//        //遍历baseAttrInfo中的valueList
+//        //若有已存在的
+//        for (BaseAttrValue baseAttrValue : baseAttrInfo.getAttrValueList()) {
+//            if (dbValueList.contains(baseAttrValue)){
+//                attrValueMapper.updateByPrimaryKey(baseAttrValue);
+//            }else{
+//                attrValueMapper.insert(baseAttrValue);
+//            }
+//        }
+        
+        
         for (BaseAttrValue baseAttrValue : attrValueList) {
-            baseAttrValue.setAttrId(backAttrInfo.getId());
+            baseAttrValue.setAttrId(baseAttrInfo.getId());
             attrValueMapper.insert(baseAttrValue);
         }
     }
@@ -67,11 +104,33 @@ public class AttrServiceImpl implements AttrService {
     @Override
     public void removeAttrInfo(String attrId) {
         //清空相应属性值
-        Example example = new Example(BaseAttrValue.class);
-        Example.Criteria criteria = example.createCriteria();
+        Example.Criteria criteria = attrValueExample.createCriteria();
         criteria.andEqualTo("attrId",attrId);
-        attrValueMapper.deleteByExample(example);
+        attrValueMapper.deleteByExample(attrValueExample);
         //删除属性信息
         attrInfoMapper.deleteByPrimaryKey(attrId);
+    }
+
+    @Override
+    public List<BaseAttrValue> getAttrValueList(String attrId) {
+        attrValueExample.clear();
+        attrValueExample.createCriteria().andEqualTo("attrId",attrId);
+        System.out.println(attrValueExample);
+        return attrValueMapper.selectByExample(attrValueExample);
+    }
+
+    @Override
+    public void saveAttrValue(BaseAttrValue baseAttrValue) {
+        attrValueMapper.insert(baseAttrValue);
+    }
+
+    @Override
+    public void updateAttrValue(BaseAttrValue baseAttrValue) {
+        attrValueMapper.updateByPrimaryKey(baseAttrValue);
+    }
+
+    @Override
+    public void updateValueTableData(List<BaseAttrValue> valueList) {
+
     }
 }

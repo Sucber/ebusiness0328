@@ -62,4 +62,24 @@ public class BaseAttrValue implements Serializable {
     public void setUrlParam(String urlParam) {
         this.urlParam = urlParam;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj)
+            return true;
+        if(obj == null)
+            return false;
+        if(this.getClass() != obj.getClass())
+            return false;
+        final BaseAttrValue student = (BaseAttrValue) obj;
+        if(this.getValueName() != student.getValueName())
+            return false;
+        if(this.getAttrId() != student.getAttrId())
+            return false;
+        if(this.getIsEnabled() != student.getIsEnabled())
+            return false;
+        if(this.getUrlParam() != student.getUrlParam())
+            return false;
+        return true;
+    }
 }

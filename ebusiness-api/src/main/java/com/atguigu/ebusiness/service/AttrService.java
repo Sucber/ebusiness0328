@@ -1,6 +1,7 @@
 package com.atguigu.ebusiness.service;
 
 import com.atguigu.ebusiness.bean.BaseAttrInfo;
+import com.atguigu.ebusiness.bean.BaseAttrValue;
 
 import java.util.List;
 
@@ -13,4 +14,12 @@ public interface AttrService {
     void updateAttrInfo(BaseAttrInfo baseAttrInfo);
 
     void removeAttrInfo(String attrId);
+
+    List<BaseAttrValue> getAttrValueList(String attrInfoId);
+
+    void saveAttrValue(BaseAttrValue baseAttrValue);
+
+    void updateAttrValue(BaseAttrValue baseAttrValue);
+
+    void updateValueTableData(List<BaseAttrValue> valueList);
 }
