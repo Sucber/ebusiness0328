@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/dbusiness-manager-service/dbusiness-manager-service.iml" filepath="$PROJECT_DIR$/dbusiness-manager-service/dbusiness-manager-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/ebusiness-api/ebusiness-api.iml" filepath="$PROJECT_DIR$/ebusiness-api/ebusiness-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/ebusiness-common-utils/ebusiness-common-utils.iml" filepath="$PROJECT_DIR$/ebusiness-common-utils/ebusiness-common-utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ebusiness-manager-service/ebusiness-manager-service.iml" filepath="$PROJECT_DIR$/ebusiness-manager-service/ebusiness-manager-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/ebusiness-manager-web/ebusiness-manager-web.iml" filepath="$PROJECT_DIR$/ebusiness-manager-web/ebusiness-manager-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/ebusiness-parent/ebusiness-parent.iml" filepath="$PROJECT_DIR$/ebusiness-parent/ebusiness-parent.iml" />
       <module fileurl="file://$PROJECT_DIR$/ebusiness-service-utils/ebusiness-service-utils.iml" filepath="$PROJECT_DIR$/ebusiness-service-utils/ebusiness-service-utils.iml" />
