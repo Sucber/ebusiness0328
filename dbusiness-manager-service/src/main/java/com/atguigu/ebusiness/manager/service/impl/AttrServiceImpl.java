@@ -34,7 +34,7 @@ public class AttrServiceImpl implements AttrService {
 
     @Override
     public List<BaseAttrInfo> getBaseAttrInfo(String catalog3Id) {
-
+        attrInfoExample.clear();
         attrInfoExample.createCriteria().andEqualTo("catalog3Id",catalog3Id);
 
         return attrInfoMapper.selectByExample(attrInfoExample);

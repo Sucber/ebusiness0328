@@ -22,11 +22,14 @@
     <div>
         一级分类：<input id="ctg1ForAttrList" class="easyui-combobox" data-options="valueField:'id',textField:'name',url:'getBaseCatalog1List',
                 onSelect: function(rec){
+                    $('#ctg2ForSpuList').combobox('clear');
+                    $('#ctg3ForSpuList').combobox('clear');
                     var url = 'getBaseCatalog2ListByCataLog1Id?id='+rec.id;
                     $('#ctg2ForAttrList').combobox('reload',url);
                     }" />
         二级分类：<input id="ctg2ForAttrList" class="easyui-combobox" data-options="valueField:'id',textField:'name',
                 onSelect: function(rec){
+                    $('#ctg3ForSpuList').combobox('clear');
                     var url = 'getBaseCatalog3ListByCataLog2Id?id='+rec.id;
                     $('#ctg3ForAttrList').combobox('reload',url);
                     }" />
