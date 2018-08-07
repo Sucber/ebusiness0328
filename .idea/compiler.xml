@@ -9,6 +9,7 @@
         <module name="dbusiness-manager-service" />
         <module name="ebusiness-api" />
         <module name="ebusiness-common-utils" />
+        <module name="ebusiness-manager-service" />
         <module name="ebusiness-manager-web" />
         <module name="ebusiness-service-utils" />
         <module name="ebusiness-user" />
@@ -20,12 +21,14 @@
       <module name="dbusiness-manager-service" target="1.8" />
       <module name="ebusiness-api" target="1.5" />
       <module name="ebusiness-common-utils" target="1.8" />
+      <module name="ebusiness-manager-service" target="1.8" />
       <module name="ebusiness-manager-web" target="1.8" />
       <module name="ebusiness-parent" target="1.8" />
       <module name="ebusiness-service-utils" target="1.8" />
       <module name="ebusiness-user" target="1.8" />
       <module name="ebusiness-user-web" target="1.8" />
       <module name="ebusiness-web-utils" target="1.8" />
+      <module name="fastdfs-client-java" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>

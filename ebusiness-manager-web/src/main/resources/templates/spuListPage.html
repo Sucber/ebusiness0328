@@ -47,7 +47,9 @@
             </div>
         </div>
     </div>
+    <div th:include="skuInfoPage"></div>
     <div th:include="spuInfoPage"></div>
+    <div th:include="skuListPage"></div>
 
     <script languae="javascript">
         function reloadSpuList() {
@@ -64,6 +66,28 @@
 
             // 初始化对话框
             initSpuInfoDlg();
+        }
+        function addSkuInfo() {
+            //打开一个spu添加的对话框
+            $("#sku_dlg").dialog("open");
+
+            var spuInfo = $("#spulist_dg").datagrid("getSelected");
+
+            // 初始化对话框
+            initSkuInfoDlg(spuInfo);
+
+        }
+        function showSkuInfoList(){
+            // spuInfo
+            var spuInfo = $("#spulist_dg").datagrid("getSelected");
+            if(spuInfo==undefined||spuInfo==""||spuInfo==null){
+                alert("请选择spu");
+            }else {
+                // 打开sku对话框
+                $("#skulist_dlg").dialog("open");
+                // 初始化sku数据列表
+                initSkuListDatagrid(spuInfo);
+            }
         }
     </script>
 </body>

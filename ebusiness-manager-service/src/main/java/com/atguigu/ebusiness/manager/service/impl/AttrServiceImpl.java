@@ -35,7 +35,7 @@ public class AttrServiceImpl implements AttrService {
     @Override
     public List<BaseAttrInfo> getBaseAttrInfo(String catalog3Id) {
         attrInfoExample.clear();
-        attrInfoExample.createCriteria().andEqualTo("catalog3Id",catalog3Id);
+        attrInfoExample.createCriteria().andEqualTo("catalog3Id", catalog3Id);
 
         return attrInfoMapper.selectByExample(attrInfoExample);
     }
@@ -46,13 +46,13 @@ public class AttrServiceImpl implements AttrService {
         attrInfoMapper.insertSelective(baseAttrInfo);
         //获取从数据库获得的attrInfo（需要attrid）
         Example.Criteria criteria = attrInfoExample.createCriteria();
-        criteria.andEqualTo("catalog3Id",baseAttrInfo.getCatalog3Id());
-        criteria.andEqualTo("attrName",baseAttrInfo.getAttrName());
+        criteria.andEqualTo("catalog3Id", baseAttrInfo.getCatalog3Id());
+        criteria.andEqualTo("attrName", baseAttrInfo.getAttrName());
         BaseAttrInfo backAttrInfo = attrInfoMapper.selectOneByExample(attrInfoExample);
         //插入属性值
 
         List<BaseAttrValue> attrValueList = baseAttrInfo.getAttrValueList();
-        if(attrValueList == null){
+        if (attrValueList == null) {
             return;
         }
         for (BaseAttrValue baseAttrValue : attrValueList) {
@@ -68,20 +68,20 @@ public class AttrServiceImpl implements AttrService {
         attrInfoExample.clear();
 
         //安全机制&更改属性名
-        if(baseAttrInfo==null){
+        if (baseAttrInfo == null) {
             throw new NullPointerException("baseAttrInfo为空");
         }
         BaseAttrInfo dbAttrInfo = attrInfoMapper.selectByPrimaryKey(baseAttrInfo.getId());
-        if(!dbAttrInfo.getAttrName().equals(baseAttrInfo.getAttrName())){
+        if (!dbAttrInfo.getAttrName().equals(baseAttrInfo.getAttrName())) {
             attrInfoMapper.updateByPrimaryKey(baseAttrInfo);
         }
 
         //获得数据库中所有attrid下的valueName
-        attrValueExample.createCriteria().andEqualTo("attrId",baseAttrInfo.getId());
+        attrValueExample.createCriteria().andEqualTo("attrId", baseAttrInfo.getId());
         List<BaseAttrValue> dbValueList = attrValueMapper.selectByExample(attrValueExample);
         //插入属性值
         List<BaseAttrValue> attrValueList = baseAttrInfo.getAttrValueList();
-        if(attrValueList == null){
+        if (attrValueList == null) {
             return;
         }
 //        //遍历baseAttrInfo中的valueList
@@ -93,8 +93,8 @@ public class AttrServiceImpl implements AttrService {
 //                attrValueMapper.insert(baseAttrValue);
 //            }
 //        }
-        
-        
+
+
         for (BaseAttrValue baseAttrValue : attrValueList) {
             baseAttrValue.setAttrId(baseAttrInfo.getId());
             attrValueMapper.insert(baseAttrValue);
@@ -105,7 +105,7 @@ public class AttrServiceImpl implements AttrService {
     public void removeAttrInfo(String attrId) {
         //清空相应属性值
         Example.Criteria criteria = attrValueExample.createCriteria();
-        criteria.andEqualTo("attrId",attrId);
+        criteria.andEqualTo("attrId", attrId);
         attrValueMapper.deleteByExample(attrValueExample);
         //删除属性信息
         attrInfoMapper.deleteByPrimaryKey(attrId);
@@ -114,8 +114,7 @@ public class AttrServiceImpl implements AttrService {
     @Override
     public List<BaseAttrValue> getAttrValueList(String attrId) {
         attrValueExample.clear();
-        attrValueExample.createCriteria().andEqualTo("attrId",attrId);
-        System.out.println(attrValueExample);
+        attrValueExample.createCriteria().andEqualTo("attrId", attrId);
         return attrValueMapper.selectByExample(attrValueExample);
     }
 
@@ -132,5 +131,20 @@ public class AttrServiceImpl implements AttrService {
     @Override
     public void updateValueTableData(List<BaseAttrValue> valueList) {
 
+    }
+
+    @Override
+    public List<BaseAttrInfo> getAttrListByCtg3Id(String catalog3Id) {
+        List<BaseAttrInfo> baseAttrInfoList = this.getBaseAttrInfo(catalog3Id);
+        if (baseAttrInfoList == null || baseAttrInfoList.isEmpty()) {
+            return null;
+        }
+        for (BaseAttrInfo attrInfo : baseAttrInfoList) {
+            List<BaseAttrValue> attrValueList = this.getAttrValueList(attrInfo.getId());
+            if (attrValueList != null && !attrValueList.isEmpty()) {
+                attrInfo.setAttrValueList(attrValueList);
+            }
+        }
+        return baseAttrInfoList;
     }
 }

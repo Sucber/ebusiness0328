@@ -22,4 +22,6 @@ public interface AttrService {
     void updateAttrValue(BaseAttrValue baseAttrValue);
 
     void updateValueTableData(List<BaseAttrValue> valueList);
+
+    List<BaseAttrInfo> getAttrListByCtg3Id(String catalog3Id);
 }

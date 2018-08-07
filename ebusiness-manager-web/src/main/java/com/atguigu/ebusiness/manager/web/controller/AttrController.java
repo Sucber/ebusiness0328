@@ -21,6 +21,11 @@ public class AttrController {
         return attrService.getBaseAttrInfo(id);
     }
 
+    @RequestMapping("getAttrListByCtg3Id")
+    public List<BaseAttrInfo> getAttrListByCtg3Id(@RequestParam("catalog3Id") String catalog3Id){
+        return attrService.getAttrListByCtg3Id(catalog3Id);
+    }
+
     @RequestMapping("saveAttrInfo")
     public String saveAttrInfo(BaseAttrInfo baseAttrInfo){
         try {
