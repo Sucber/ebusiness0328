@@ -7,7 +7,7 @@
 <body>
     <!-- 弹出框 -->
     <div id="spuSaleAttr_dlg" class="easyui-dialog" title="编辑销售属性" style="width: 500px;height:400px"
-            closed="true" data-options="iconCls:'icon-save',resizable:true,modal:false" buttons="#spuSaleAttrBtns">
+            closed="true" data-options="iconCls:'icon-save',resizable:true,modal:false">
         <br/><br/>
         <!------------------从基本销售属性中选择------------->
         销售属性：  <select name="saleAttr" id="saleAttrSelect"  class="easyui-combobox"
@@ -15,7 +15,7 @@
          </select>
         <br/><br/>
         <!----------------销售属性值列表---------------------------->
-        <table id="spuSaleAttrValueDg" class="easyui-datagrid" title="销售属性值列表"
+        <table id="spuSaleAttrValueDg" class="easyui-datagrid" title="销售属性值列表" style="height:210px"
                data-options="singleSelect:true,method:'get',toolbar:'#spuSaleAttrValueTootbar'" ></table>
 
 
@@ -26,7 +26,7 @@
                 <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="removeSpuSaleAttrValue()" >删除</a>
             </div>
         </div>
-        <div id="spuSaleAttrBtns">
+        <div>
             <a href="#" class="easyui-linkbutton" onclick="saveSpuSaleAttr()">确 定</a>
             <a href="#" class="easyui-linkbutton" onclick="closeSpuSaleAttr()">关 闭</a>
         </div>

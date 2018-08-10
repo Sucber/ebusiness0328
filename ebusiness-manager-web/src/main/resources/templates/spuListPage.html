@@ -20,7 +20,7 @@
             <div style="margin-bottom:5px">
                 <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addSpuInfo()">添加</a>
                 <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true">编辑</a>
-                <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
+                <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="removeSpuInfo()">删除</a>
                 <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addSkuInfo()">增加sku</a>
                 <a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="showSkuInfoList()"> sku列表</a>
             </div>
@@ -66,6 +66,15 @@
 
             // 初始化对话框
             initSpuInfoDlg();
+        }
+        function removeSpuInfo(){
+            var info = $("#spulist_dg").datagrid("getSelected");
+            $.post("deleteSpuInfoBySpuId",{
+                spuId:info.id
+            },function(data){
+                alert(data);
+                reloadSpuList();
+            });
         }
         function addSkuInfo() {
             //打开一个spu添加的对话框

@@ -9,6 +9,7 @@
         <module name="dbusiness-manager-service" />
         <module name="ebusiness-api" />
         <module name="ebusiness-common-utils" />
+        <module name="ebusiness-item-web" />
         <module name="ebusiness-manager-service" />
         <module name="ebusiness-manager-web" />
         <module name="ebusiness-service-utils" />
@@ -21,6 +22,7 @@
       <module name="dbusiness-manager-service" target="1.8" />
       <module name="ebusiness-api" target="1.5" />
       <module name="ebusiness-common-utils" target="1.8" />
+      <module name="ebusiness-item-web" target="1.8" />
       <module name="ebusiness-manager-service" target="1.8" />
       <module name="ebusiness-manager-web" target="1.8" />
       <module name="ebusiness-parent" target="1.8" />

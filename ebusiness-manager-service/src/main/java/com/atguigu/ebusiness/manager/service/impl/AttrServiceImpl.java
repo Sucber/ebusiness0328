@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ser.Serializers;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,11 +45,6 @@ public class AttrServiceImpl implements AttrService {
     public void saveAttrInfo(BaseAttrInfo baseAttrInfo) {
         //插入一条AttfInfo数据
         attrInfoMapper.insertSelective(baseAttrInfo);
-        //获取从数据库获得的attrInfo（需要attrid）
-        Example.Criteria criteria = attrInfoExample.createCriteria();
-        criteria.andEqualTo("catalog3Id", baseAttrInfo.getCatalog3Id());
-        criteria.andEqualTo("attrName", baseAttrInfo.getAttrName());
-        BaseAttrInfo backAttrInfo = attrInfoMapper.selectOneByExample(attrInfoExample);
         //插入属性值
 
         List<BaseAttrValue> attrValueList = baseAttrInfo.getAttrValueList();
@@ -56,7 +52,7 @@ public class AttrServiceImpl implements AttrService {
             return;
         }
         for (BaseAttrValue baseAttrValue : attrValueList) {
-            baseAttrValue.setAttrId(backAttrInfo.getId());
+            baseAttrValue.setAttrId(baseAttrInfo.getId());
             attrValueMapper.insert(baseAttrValue);
         }
     }
@@ -76,29 +72,42 @@ public class AttrServiceImpl implements AttrService {
             attrInfoMapper.updateByPrimaryKey(baseAttrInfo);
         }
 
-        //获得数据库中所有attrid下的valueName
-        attrValueExample.createCriteria().andEqualTo("attrId", baseAttrInfo.getId());
-        List<BaseAttrValue> dbValueList = attrValueMapper.selectByExample(attrValueExample);
-        //插入属性值
+        //判断valueList是否有数据
         List<BaseAttrValue> attrValueList = baseAttrInfo.getAttrValueList();
         if (attrValueList == null) {
             return;
         }
-//        //遍历baseAttrInfo中的valueList
-//        //若有已存在的
-//        for (BaseAttrValue baseAttrValue : baseAttrInfo.getAttrValueList()) {
-//            if (dbValueList.contains(baseAttrValue)){
-//                attrValueMapper.updateByPrimaryKey(baseAttrValue);
-//            }else{
-//                attrValueMapper.insert(baseAttrValue);
-//            }
-//        }
+        //获得数据库中所有attrid下的attrValueId
+        List<String> attrValueIdsFormDB = attrValueMapper.selectValueIdByAttrId(baseAttrInfo.getId());
+        //指定一个比较大的长度，以免数据过多导致集合扩容次数过多
+        List<String> attrValueIdsFormInfo = new ArrayList<String>(100);
 
-
-        for (BaseAttrValue baseAttrValue : attrValueList) {
-            baseAttrValue.setAttrId(baseAttrInfo.getId());
-            attrValueMapper.insert(baseAttrValue);
+        //遍历baseAttrInfo中的valueList
+        //若有已存在的valueId，则update数据，若无数据，则insert数据
+        for (BaseAttrValue baseAttrValue : baseAttrInfo.getAttrValueList()) {
+            if (attrValueIdsFormDB.contains(baseAttrValue.getId())){
+                attrValueMapper.updateByPrimaryKey(baseAttrValue);
+            }else{
+                attrValueMapper.insert(baseAttrValue);
+            }
+            //将每个valueid封装到另一个list中（减少循环迭代次数从而达到性能损耗降低）
+            attrValueIdsFormInfo.add(baseAttrValue.getId());
         }
+
+        //删除用户编辑时删除的属性
+        /**
+         * 思路：1.遍历数据库中的id
+         *      2.与传输过来的id进行判断，若数据库有某个id，而传输过来的id不存在，则删除,反之则不执行操作
+         */
+
+        for (String attrValueId : attrValueIdsFormDB) {
+            if(!attrValueIdsFormInfo.contains(attrValueId)){
+                attrValueMapper.deleteByPrimaryKey(attrValueId);
+            }
+        }
+
+
+
     }
 
     @Override

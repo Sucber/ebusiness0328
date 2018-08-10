@@ -40,6 +40,7 @@ public class AttrController {
     @RequestMapping("updateAttrInfo")
     public String updateAttrInfo(BaseAttrInfo baseAttrInfo){
         try {
+//            System.out.println(baseAttrInfo);
             attrService.updateAttrInfo(baseAttrInfo);
             return "success";
         }catch (Exception e){

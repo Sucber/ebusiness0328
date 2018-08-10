@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ebusiness-api/ebusiness-api.iml" filepath="$PROJECT_DIR$/ebusiness-api/ebusiness-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/ebusiness-common-utils/ebusiness-common-utils.iml" filepath="$PROJECT_DIR$/ebusiness-common-utils/ebusiness-common-utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ebusiness-item-web/ebusiness-item-web.iml" filepath="$PROJECT_DIR$/ebusiness-item-web/ebusiness-item-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/ebusiness-manager-service/ebusiness-manager-service.iml" filepath="$PROJECT_DIR$/ebusiness-manager-service/ebusiness-manager-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/ebusiness-manager-web/ebusiness-manager-web.iml" filepath="$PROJECT_DIR$/ebusiness-manager-web/ebusiness-manager-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/ebusiness-parent/ebusiness-parent.iml" filepath="$PROJECT_DIR$/ebusiness-parent/ebusiness-parent.iml" />

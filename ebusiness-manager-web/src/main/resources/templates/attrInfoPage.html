@@ -18,23 +18,18 @@
     </div>
 
 <script language="JavaScript">
-    function updateAttr(){
-        var catalog3Id = $("#ctg3ForAttrList").combobox("getValue");
-        var attrId = $("#dg").datagrid("getSelected").id;
-        var attrName = $("#attrName").val();
-
+    function updateAttr(attrId){
         var attrInfo = {
             id:attrId,
-            attrName:attrName,
-            catalog3Id:catalog3Id
+            attrName:$("#attrName").val(),
+            catalog3Id:$("#ctg3ForAttrList").combobox("getValue")
         };
 
         var rows =  $("#dg_av").datagrid("getRows");
         $(rows).each(function(i,json){
             if(json.valueName){
                 attrInfo["attrValueList["+i+"].valueName"] = json.valueName;
-            }else{
-
+                attrInfo["attrValueList["+i+"].attrId"] = attrInfo.id;
             }
         });
         $.post("/updateAttrInfo",attrInfo,function(data){
@@ -46,8 +41,7 @@
 
     function saveAttr(){
         var catalog3Id = $("#ctg3ForAttrList").combobox("getValue");
-        var attrName = $("#attrName").val();
-
+        var attrName = $("#attrName").textbox("getValue");
         var attrInfo = {
             attrName:attrName,
             catalog3Id:catalog3Id
@@ -116,14 +110,14 @@
         if (attrInfo == undefined) {
             $("#commitBtn").attr("href", "javascript:saveAttr()");
         } else {
-            $("#commitBtn").attr("href", "javascript:updateAttr()");
+            $("#commitBtn").attr("href", "javascript:updateAttr("+attrInfo.id+")");
         }
         //根据行号删除
         $("#dg_av").datagrid("loadData",[]);
 
         if(attrInfo != undefined){
             // 给attrName赋值
-            $("#attrName").textbox("setText",attrInfo.attrName);
+            $("#attrName").textbox("setValue",attrInfo.attrName);
             // 给属性值列表赋值
             var attrInfoIdJson = {
                 attrId:attrInfo.id

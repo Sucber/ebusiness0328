@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SPUServiceImpl implements SPUService {
@@ -59,12 +60,11 @@ public class SPUServiceImpl implements SPUService {
         spuInfoMapper.insertSelective(spuInfo);
         String id = spuInfo.getId();
 
-
         //保存spu销售属性
         List<SpuSaleAttr> spuSaleAttrList = spuInfo.getSpuSaleAttrList();
         if (!spuSaleAttrList.isEmpty()) {
             for (SpuSaleAttr spuSaleAttr : spuSaleAttrList) {
-                spuSaleAttr.setSaleAttrId(id);
+                spuSaleAttr.setSpuId(id);
                 spuSaleAttrMapper.insert(spuSaleAttr);
 
                 List<SpuSaleAttrValue> spuSaleAttrValueList = spuSaleAttr.getSpuSaleAttrValueList();
@@ -88,6 +88,15 @@ public class SPUServiceImpl implements SPUService {
         }
     }
 
+    public void updateSpu(SpuInfo spuInfo) {
+        //更新spu基本信息
+        spuInfoMapper.updateByPrimaryKey(spuInfo);
+        String spuId = spuInfo.getId();
+        //更新spu相关销售属性列表
+
+        //更新spu相关图片列表
+    }
+
     @Override
     public List<SpuSaleAttr> getSpuSaleAttrListBySpuId(String spuId) {
         spuSaleAttrExample.clear();
@@ -95,18 +104,44 @@ public class SPUServiceImpl implements SPUService {
         List<SpuSaleAttr> spuSaleAttrs = spuSaleAttrMapper.selectByExample(spuSaleAttrExample);
         for (SpuSaleAttr spuSaleAttr : spuSaleAttrs) {
             spuSaleAttrValueExample.clear();
-            spuSaleAttrValueExample.createCriteria().andEqualTo("saleAttrId",spuSaleAttr.getSaleAttrId());
+            Example.Criteria criteria = spuSaleAttrValueExample.createCriteria();
+            criteria.andEqualTo("saleAttrId",spuSaleAttr.getSaleAttrId());
+            criteria.andEqualTo("spuId",spuId);
             List<SpuSaleAttrValue> spuSaleAttrValues = spuSaleAttrValueMapper.selectByExample(spuSaleAttrValueExample);
             spuSaleAttr.setSpuSaleAttrValueList(spuSaleAttrValues);
         }
         return spuSaleAttrs;
     }
 
+    /**
+     * 通过spuid获取spu图片列表
+     * @param spuId
+     * @return List<SpuImage>
+     */
     @Override
     public List<SpuImage> getSpuImageListBySpuId(String spuId) {
         spuImageExample.clear();
         spuImageExample.createCriteria().andEqualTo("spuId",spuId);
         return spuImageMapper.selectByExample(spuImageExample);
     }
+    @Override
+    public List<SpuSaleAttr> getSpuSaleAttrListCheckBySku(Map<String, String> stringStringHashMap) {
+        return spuSaleAttrValueMapper.selectSpuSaleAttrListCheckBySku(stringStringHashMap);
+    }
 
+    @Override
+    public void deleteSpuInfoById(String spuId) {
+        //spu销售属性相关的example清理
+        spuSaleAttrValueExample.clear();
+        spuSaleAttrExample.clear();
+        //spu销售属性相关的判断条件
+        spuSaleAttrValueExample.createCriteria().andEqualTo("spuId",spuId);
+        spuSaleAttrExample.createCriteria().andEqualTo("spuId",spuId);
+        //删除spu销售属性
+        spuSaleAttrMapper.deleteByExample(spuSaleAttrExample);
+        spuSaleAttrValueMapper.deleteByExample(spuSaleAttrValueExample);
+
+        spuInfoMapper.deleteByPrimaryKey(spuId);
+
+    }
 }

@@ -27,6 +27,18 @@ public class SPUController {
         return imgUrl;
     }
 
+    @RequestMapping("deleteSpuInfoBySpuId")
+    public String deleteSpuInfoBySpuId(@RequestParam("spuId") String spuId){
+
+        try {
+            spuService.deleteSpuInfoById(spuId);
+            return "success";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "default";
+        }
+    }
+
     @RequestMapping("saveSpu")
     public String saveSpu(SpuInfo spuInfo){
         try {
@@ -54,7 +66,8 @@ public class SPUController {
 
     @RequestMapping("getSpuSaleAttrListBySpuId")
     public List<SpuSaleAttr> getSpuSaleAttrListBySpuId(@RequestParam("spuId") String spuId) {
-        return spuService.getSpuSaleAttrListBySpuId(spuId);
+        List<SpuSaleAttr> result = spuService.getSpuSaleAttrListBySpuId(spuId);
+        return result;
     }
 
     @RequestMapping("getSpuImageListBySpuId")

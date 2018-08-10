@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.atguigu.ebusiness.manager.mapper.SkuSaleAttrValueMapper">
+    <!-- Sku销售属性值 -->
+    <resultMap id="SkuSaleAttrValueMap" type="com.atguigu.ebusiness.bean.SkuInfo"
+               autoMapping="true">
+        <result property="id" column="id"></result>
+        <collection property="skuSaleAttrValueList" ofType="com.atguigu.ebusiness.bean.SkuSaleAttrValue" autoMapping="true">
+            <result property="id" column="ssavId"></result>
+        </collection>
+    </resultMap>
+
+    <select id="selectSkuSaleAttrValueListBySpu" resultMap="SkuSaleAttrValueMap">
+        select ssav.id as ssavId,
+        info.id,ssav.sale_attr_value_id from sku_info info,sku_sale_attr_value ssav
+        WHERE ssav.sku_id = info.id
+        AND info.spu_id = #{spuId}
+    </select>
+</mapper>

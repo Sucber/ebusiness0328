@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-</head>
+ </head>
 <body>
 <!-----------------弹出框----------------------------->
 <div id="spu_dlg" class="easyui-dialog" title="编辑spu" style="width:700px;height:520px;"
@@ -15,7 +15,6 @@
         <br/><br/>
         <label>spu描述:</label>
         <input  id="description" name="description" class="easyui-textbox" data-options="multiline:true" style="width:500px;height:100px"/>
-
         <input id="spuId" name="spuId" type="hidden"/>
         <br/><br/>
 
@@ -102,13 +101,17 @@
 
     }
 
-    function initSpuInfoDlg() {
+    function editSpu(spuId){
+
+    }
+
+    function initSpuInfoDlg(spuInfo) {
         // 初始化图片列表
-        initSpuImgListDatagrid();
+        initSpuImgListDatagrid(spuInfo);
         // 初始化上传控件插件(webuploader)
         initUploader();
         // 初始化销售属性
-        initSpuSaleAttrListDatagrid();
+        initSpuSaleAttrListDatagrid(spuInfo);
     }
 
     function initUploader(){
@@ -219,7 +222,7 @@
         });
     }
 
-    function initSpuSaleAttrListDatagrid() {
+    function initSpuSaleAttrListDatagrid(spuInfo) {
         $("#spuSaleAttrDg").datagrid({
             columns:[[
                 {field:'id',title:'id',width:100,hidden:true},
